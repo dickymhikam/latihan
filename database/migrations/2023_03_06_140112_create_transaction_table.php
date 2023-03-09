@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransacationTable extends Migration
+class CreateTransactionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTransacationTable extends Migration
      */
     public function up()
     {
-        Schema::create('transacation', function (Blueprint $table) {
+        Schema::create('transaction', function (Blueprint $table) {
             $table->id();
-            $table->integer('appointment_id');
+            $table->foreignId('appointment_id')->nullabel()->index('fk_transction_to_appointment');
             $table->string('fee_doctor')->nullable();
             $table->string('fee_specialist')->nullable();
             $table->string('fee_hospital')->nullable();
@@ -34,6 +34,6 @@ class CreateTransacationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transacation');
+        Schema::dropIfExists('transaction');
     }
 }
