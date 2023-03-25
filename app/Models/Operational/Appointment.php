@@ -4,24 +4,25 @@ namespace App\Models\Operational;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
     // use HasFactory;
-    use softDeletes;
+    use SoftDeletes;
 
-    public $tabel = 'appointment';
+    // declare table
+    public $table = 'appointment';
 
-    // this field must type date yyyy-mm-dd hh-mm-ss
+    // this field must type date yyyy-mm-dd hh:mm:ss
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    // declare filllabel = mendeklarasikan table ini bisa di isi
-    protected $fillabel =[
+    // declare fillable
+    protected $fillable = [
         'doctor_id',
         'user_id',
         'consultation_id',
@@ -34,46 +35,29 @@ class Appointment extends Model
         'deleted_at',
     ];
 
-    public function doctor(){
-        /* untuk belongsTo itu mempunyai 3 parameter yaitu ada path model yang dituju,  
-           field tabel FK(Foreign Key),dan primary key dari tabel hasMany/hasOne
-           
-           belongs = milik 
-           
-           ketentuan one to many,one to one,dan many to many
-           one to many itu = hasMany + belongsTO
-           one to one itu = hasOne + belongsTO
-           many to many itu = hasMany + BelongsToMany*/
-        return $this->belongsTo('App\Models\Oprational\Doctor','doctor_id','id');
+    // one to many
+    public function doctor()
+    {
+        // 3 parameter (path model, field foreign key, field primary key from table hasMany/hasOne)
+        return $this->belongsTo('App\Models\Operational\Doctor', 'doctor_id', 'id');
     }
 
-    public function consultation(){
-        /* untuk belongsTo itu mempunyai 3 parameter yaitu ada path model yang dituju,  
-           field tabel FK(Foreign Key),dan primary key dari tabel hasMany/hasOne
-           
-           belongs = milik 
-           
-           ketentuan one to many,one to one,dan many to many
-           one to many itu = hasMany + belongsTO
-           one to one itu = hasOne + belongsTO
-           many to many itu = hasMany + BelongsToMany*/
-        return $this->belongsTo('App\Models\MasterData\Consultation','consultation_id','id');
+    public function consultation()
+    {
+        // 3 parameter (path model, field foreign key, field primary key from table hasMany/hasOne)
+        return $this->belongsTo('App\Models\MasterData\Consultation', 'consultation_id', 'id');
     }
 
-    public function user(){
-        /* untuk belongsTo itu mempunyai 3 parameter yaitu ada path model yang dituju,  
-           field tabel FK(Foreign Key),dan primary key dari tabel hasMany/hasOne
-           
-           belongs = milik 
-           
-           ketentuan one to many,one to one,dan many to many
-           one to many itu = hasMany + belongsTO
-           one to one itu = hasOne + belongsTO
-           many to many itu = hasMany + BelongsToMany*/
-        return $this->belongsTo('App\Models\User','user_id','id');
+    public function user()
+    {
+        // 3 parameter (path model, field foreign key, field primary key from table hasMany/hasOne)
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-    public function transaction(){
-        return $this->hasOne('App\Models\Operational\Transaction','appointment_id');
+    // one to many
+    public function transaction()
+    {
+        // 2 parameter (path model, field foreign key)
+        return $this->hasOne('App\Models\Operational\Transaction', 'appointment_id');
     }
 }

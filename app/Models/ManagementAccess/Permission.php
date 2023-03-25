@@ -4,34 +4,41 @@ namespace App\Models\ManagementAccess;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Permission extends Model
 {
     // use HasFactory;
-    use softDeletes;
+    use SoftDeletes;
 
-    // declare table = deklarasi nama tebelnya
-    public $tabel = 'permission';
+    // declare table
+    public $table = 'permission';
 
-    // this field must type date yyyy-mm-dd hh-mm-ss
+    // this field must type date yyyy-mm-dd hh:mm:ss
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    // declare filllabel = mendeklarasikan table ini bisa di isi
-    protected $fillabel =[
+    // declare fillable
+    protected $fillable = [
         'title',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    // many to many
+    public function role()
+    {
+        return $this->belongsToMany('App\Models\ManagementAccess\Role');
+    }
+
+    // one to many
     public function permission_role()
     {
-        return $this->hasMany('App\Models\ManagementAccess\PermissionRole','permission');
+        // 2 parameter (path model, field foreign key)
+        return $this->hasMany('App\Models\ManagementAccess\PermissionRole', 'permission_id');
     }
-    
 }
